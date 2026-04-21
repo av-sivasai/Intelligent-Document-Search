@@ -1,0 +1,21 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Project Data & Artifacts
+data/faiss.index
+data/metadata.pkl
+sample_documents/
+
+# Environment Variables
+.env
