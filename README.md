@@ -40,40 +40,6 @@ streamlit run app.py
 ```
 *The app will automatically open in your default browser at `http://localhost:8501`.*
 
----
-
-## ☁️ How to Deploy on Streamlit Cloud
-
-1. **Push to GitHub:** Commit your code (`app.py`, `utils/`, `requirements.txt`) and push to a public or private GitHub repository. (Note: Do not commit the `data/` folder if you don't want to pre-load documents).
-2. **Log into Streamlit Community Cloud:** Go to [share.streamlit.io](https://share.streamlit.io/) and connect your GitHub account.
-3. **Deploy New App:** Click "New app", select your repository, branch, and specify `app.py` as the main file path.
-4. **Launch:** Click "Deploy". Streamlit Cloud will automatically read `requirements.txt`, install dependencies, and host your search engine for free.
-
----
-
-## 📸 Screenshots Description
-
-If you are including this in a project report, here is how you can describe your application UI:
-
-1. **Main Search Interface:** A sleek, dual-column design. The left sidebar handles document ingestion with drag-and-drop file uploading and database controls. The main area contains a large search bar, query suggestions, and filter dropdowns (File Type, Specific Document).
-2. **Result Cards:** Displays hits in a card-based layout featuring the Document Title in bold blue, a green gradient "Similarity Score" progress bar, and the exact extracted text with keywords highlighted in yellow for quick reading.
-3. **Analytics Dashboard:** A clean, metrics-driven view featuring three main KPI boxes (Total Documents, Total Chunks, Searches Performed). Below are interactive pandas dataframes showing the inventory of uploaded files and chronological search history.
-
----
-
-## 🎓 Viva Explanation (For College Final Year Presentation)
-
-**Q: What is the difference between keyword search and semantic search?**
-*Answer:* Keyword search relies on exact string matching (e.g., searching for "car" won't match "automobile"). Semantic search uses machine learning models (Sentence Transformers) to convert text into mathematical vectors (embeddings) representing the *meaning* of the text. This means searching for "car" will accurately retrieve documents mentioning "automobile" or "vehicle" because their vectors are close together in the vector space.
-
-**Q: Why did you choose FAISS?**
-*Answer:* FAISS (Facebook AI Similarity Search) is an industry-standard library highly optimized for clustering and searching dense vectors. When we process large documents, we generate thousands of chunks. Comparing a query against all of them using a standard loop would be very slow (O(N) complexity). FAISS indexes the vectors and performs ultra-fast nearest-neighbor search, ensuring our UI responds in milliseconds.
-
-**Q: How do you process large PDFs?**
-*Answer:* We extract the raw text using `pdfplumber`/`PyPDF2`. Since transformers have a context limit (e.g., 512 tokens), we pass the raw text through a "text chunker" (`utils/preprocessor.py`). It splits the document into overlapping chunks of ~400 words. The overlap (e.g., 50 words) prevents important sentences from being cut off at the boundary. Each chunk is then individually embedded and indexed.
-
-**Q: How is the state managed in this Streamlit app?**
-*Answer:* We use `st.session_state` to persist the FAISS `VectorStore`, the search history, and analytics variables across user interactions. Without this, Streamlit would reset the database and variables every time a button is clicked.
 
 ## 📂 Folder Structure Explanation
 - `app.py`: The main frontend application file containing UI layouts, styling, and application flow.
